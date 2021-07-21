@@ -1,24 +1,46 @@
-import logo from './logo.svg';
+
 import './App.css';
+import Table from './Components/Table'
+import { useState } from "react";
+import {stdContext} from './context/stdContext'
+
+// import Table222 from './Components/Table222'
+
 
 function App() {
+  const [info, setinfo] = useState([{
+    qualifation:"12th",
+    course:"Science",
+    institue:"orchid",
+    year:"2017",
+    percent:"72"
+  },
+  {
+    qualifation:"graduate",
+    course:"bca",
+    institue:"SAMS",
+    year:"2020",
+    percent:"70" 
+  },
+  {
+    qualifation:"post graduate",
+    course:"Mca",
+    institue:"SAMS",
+    year:"2020",
+    percent:"65" 
+  }])
+ 
+  const add=(data)=>{
+    const temp=[...info,data]
+    setinfo(temp)
+  }
+  const data={info,add}
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <stdContext.Provider value={data}>
+    <Table stdDetails={info} />
+    </stdContext.Provider>
+    </>
   );
 }
 
