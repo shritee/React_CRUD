@@ -7,9 +7,11 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import EditIcon from '@material-ui/icons/Edit';
+import AddCircleIcon from '@material-ui/icons/AddCircle';
+// import Adddata from './Adddata'
 import Delete from '@material-ui/icons/Delete';
-import Adddata from'../Components/Adddata'
-import Editdata from '../Components/Editdata'
+// import Editdata from './Editdata'
 
 
 const StyledTableCell = withStyles((theme) => ({
@@ -31,9 +33,20 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 
-
-
 export default function CustomizedTables(props) {
+  const data = props.stdDetails.map((row, i) => (
+    <StyledTableRow key={i}>
+      <StyledTableCell component="th" scope="row" align="center">
+        {row.qualifation}
+      </StyledTableCell>
+      <StyledTableCell align="center">{row.course}</StyledTableCell>
+      <StyledTableCell align="center">{row.institute}</StyledTableCell>
+      <StyledTableCell align="center">{row.year}</StyledTableCell>
+      <StyledTableCell align="center">{row.percent}</StyledTableCell>
+      <StyledTableCell align="center"><button onclick={props.open("edit",i)} ><EditIcon/></button><Delete/></StyledTableCell>
+
+    </StyledTableRow>
+  ))
   return (
     <>
     <TableContainer component={Paper}>
@@ -45,24 +58,21 @@ export default function CustomizedTables(props) {
             <StyledTableCell align="center">University </StyledTableCell>
             <StyledTableCell align="center">Passing Year</StyledTableCell>
             <StyledTableCell align="center">Percentage</StyledTableCell>
-            <StyledTableCell align="center"><Adddata/></StyledTableCell>
+            <StyledTableCell align="center"><button onclick={props.open("new")} style={{background:"black", color:"white", border:"none"}} >
+              <AddCircleIcon />
+              </button>
+              </StyledTableCell>
           </TableRow>
         </TableHead>    
         <TableBody>
-
-          {props.stdDetails.map((row, i) => (
-            <StyledTableRow key={i}>
-              <StyledTableCell component="th" scope="row" align="center">
-                {row.qualifation}
-              </StyledTableCell>
-              <StyledTableCell align="center">{row.course}</StyledTableCell>
-              <StyledTableCell align="center">{row.institue}</StyledTableCell>
-              <StyledTableCell align="center">{row.year}</StyledTableCell>
-              <StyledTableCell align="center">{row.percent}</StyledTableCell>
-              <StyledTableCell align="center"><Editdata/><Delete/></StyledTableCell>
-
-            </StyledTableRow>
-          ))}
+          {props.stdDetails=== null ?(
+            <StyledTableRow>
+            <StyledTableCell>
+              Fill Data
+            </StyledTableCell>
+          </StyledTableRow>
+          ):
+          (data)}
         </TableBody>
       </Table>
     </TableContainer>
